@@ -1,3 +1,7 @@
+# calculateDist.py
+# Author: Diego Mariano
+
+
 from math import sqrt
 
 r = open("result2.txt").readlines()
