@@ -7,12 +7,13 @@ from math import sqrt
 import numpy
 
 print "Running GTS-Score"
+separator = ","
 
 # File 
 try:
 	tsv = sys.argv[1]
 except:
-	tsv = "aux65.tsv"
+	tsv = "gt6.5_c10.csv"
 
 # Tolerant beta-glucosidases
 try:
@@ -33,16 +34,21 @@ tolerants = tolerants_list.split(",")
 print "Constructing the distance matrix"
 dist = []
 tsv_file = open(tsv).readlines()
+len_tsv = len(tsv_file)
+cont_tsv = 1
 
 for row1 in tsv_file:
 
-	pos1 = row1.split("\t")
+	print str(cont_tsv)+"/"+str(len_tsv)
+	cont_tsv+=1
+
+	pos1 = row1.split(separator)
 
 	dist_row = []
 
 	for row2 in tsv_file:
 
-		pos2 = row2.split("\t")
+		pos2 = row2.split(separator)
 
 		# the distance is given by sqrt of all (pos2 - pos1)**2
 
@@ -68,7 +74,7 @@ centroid = []
 
 # Fill centroid list with zeros
 for row in tsv_file:
-	pos = row.split("\t")
+	pos = row.split(separator)
 	for cell in range(len(pos)):
 		centroid.append(0)
 	break
@@ -79,7 +85,7 @@ for row in tsv_file:
 	# Verify if the actual line is in tolerants list
 	if str(i) in tolerants:
 
-		pos = row.split("\t")
+		pos = row.split(separator)
 		tam_pos = len(pos)
 
 		# Analyze each cell (k) in pos1 and pos2
@@ -92,7 +98,7 @@ for row in tsv_file:
 for cell in range(len(centroid)):
 	centroid[cell] = centroid[cell]/len(tolerants)
 
-print centroid
+#print centroid
 
 # CALCULATING GTS-SCORE ***************************************
 print "Calculating GTS-SCORE"
@@ -101,7 +107,7 @@ w = open("gts-score.txt","w")
 for row in tsv_file:
 	# euclidian distance between a line and the centroid
 
-	pos = row.split("\t")
+	pos = row.split(separator)
 
 	aux = 0
 	dist_centroid = 0
@@ -193,7 +199,7 @@ dgts_parcial = t2_dist - t1_dist
 dgts = dgts_parcial / 1
 print "DGTS: "+str(dgts)
 
-'''
+
 
 mut_20 = open("mutantes_20.tsv").readlines()
 aux = 0
@@ -225,6 +231,6 @@ print "DeltaGTS: "
 for g in delta_gts:
 	print g
 
-
+'''
 
 print "Successful"
