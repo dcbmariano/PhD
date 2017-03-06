@@ -1,0 +1,7 @@
+LBS-ModPipe - LOG.TXT
+
+Faz modelagens de proteínas em larga escala
+
+v0.1: Implementação da modelagem em larga escala
+v0.2: Apresenta paralelização da execução do modeller
+v0.3: Atualização para rodar no servidor da Bioinfo
